@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AWS Static Website — S3 + CloudFront</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="pill">AWS Static Website</span>
+      <h1>S3 + CloudFront Demo</h1>
+      <p class="lead">Minimal static site deployed to a private S3 bucket and served globally via CloudFront (OAC). CI/CD-ready.</p>
+
+      <div class="grid">
+        <div>
+          <h3>Stack</h3>
+          <ul>
+            <li>Amazon S3 (static hosting)</li>
+            <li>Amazon CloudFront (CDN + HTTPS)</li>
+            <li>Optional: GitHub Actions (OIDC)</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Highlights</h3>
+          <ul>
+            <li>Public S3 website for demo, with clear path to private S3 + CloudFront OAC.</li>
+            <li>Region-aware setup (Montréal <code>ca-central-1</code>), easy to port.</li>
+            <li>Bucket policy + access-block configured intentionally for the mode.</li>
+            <li>Repo-ready structure (<code>site/</code>, <code>docs/</code>), simple to automate.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Repo</h3>
+          <p><a href="#" id="repo">aws-static-website</a></p>
+          <p>Docs: <code>docs/</code> • Diagram: <code>docs/architecture.png</code></p>
+        </div>
+      </div>
+
+      <footer>Deployed from <span class="kbd">main</span>. Replace this content in <code>site/index.html</code>.</footer>
+    </div>
+  </div>
+</body>
+</html>
