@@ -7,39 +7,64 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="wrap">
-    <div class="card">
-      <span class="pill">AWS Static Website</span>
-      <h1>S3 + CloudFront Demo</h1>
-      <p class="lead">Minimal static site deployed to a private S3 bucket and served globally via CloudFront (OAC). CI/CD-ready.</p>
+  <main class="wrap">
+    <header class="card">
+      <span class="pill">Case study · Serverless web</span>
+      <h1>S3 + CloudFront Static Site</h1>
+      <p class="small">
+        I deployed a static website to a <strong>private S3 bucket</strong> and serve it through
+        <strong>CloudFront</strong> using an <strong>Origin Access Control (OAC)</strong>.
+        The site is available globally over HTTPS.
+      </p>
+      <p>
+        <a class="btn" href="https://d2dhnragglc0lj.cloudfront.net" target="_blank" rel="noopener">Live Demo</a>
+        <a class="btn alt" href="https://github.com/<YOUR_USER>/aws-static-website" target="_blank" rel="noopener">Source Code</a>
+      </p>
 
-      <div class="grid">
+      <div class="grid cols-3">
         <div>
-          <h3>Stack</h3>
+          <h2>What’s done</h2>
           <ul>
-            <li>Amazon S3 (static hosting)</li>
-            <li>Amazon CloudFront (CDN + HTTPS)</li>
-            <li>Optional: GitHub Actions (OIDC)</li>
+            <li>Private S3 bucket (block public access on)</li>
+            <li>CloudFront distribution with OAC (S3 REST origin)</li>
+            <li>Bucket policy scoped to this distribution’s ARN</li>
+            <li><code>index.html</code> set as the default root object</li>
+            <li>404 page uploaded (<code>404.html</code>)</li>
           </ul>
         </div>
+
         <div>
-          <h3>Highlights</h3>
+          <h2>How I verified</h2>
           <ul>
-            <li>Public S3 website for demo, with clear path to private S3 + CloudFront OAC.</li>
-            <li>Region-aware setup (Montréal <code>ca-central-1</code>), easy to port.</li>
-            <li>Bucket policy + access-block configured intentionally for the mode.</li>
-            <li>Repo-ready structure (<code>site/</code>, <code>docs/</code>), simple to automate.</li>
+            <li>Direct S3 access is denied; content only loads via CloudFront</li>
+            <li>HTTPS enforced (HTTP → HTTPS redirect)</li>
+            <li>Manual invalidation works for cache refresh</li>
           </ul>
         </div>
+
         <div>
-          <h3>Repo</h3>
-          <p><a href="#" id="repo">aws-static-website</a></p>
-          <p>Docs: <code>docs/</code> • Diagram: <code>docs/architecture.png</code></p>
+          <h2>Environment</h2>
+          <ul>
+            <li>Bucket region: <code>ca-central-1</code></li>
+            <li>TLS: CloudFront default certificate</li>
+            <li>Stack: HTML/CSS only</li>
+          </ul>
+        </div>
+      </div>
+      <hr>
+      <div class="grid cols-3">
+        <div>
+          <h2>Why this matters</h2>
+          <ul>
+            <li>Least-privilege: S3 stays private; CDN is the only reader</li>
+            <li>Global performance via CloudFront</li>
+            <li>Clear path to IaC + CI/CD</li>
+          </ul>
         </div>
       </div>
 
-      <footer>Deployed from <span class="kbd">main</span>. Replace this content in <code>site/index.html</code>.</footer>
-    </div>
-  </div>
+      <p class="meta">Built by <strong>Chrys Hew</strong>. Last updated 2025-10-02.</p>
+    </header>
+  </main>
 </body>
 </html>
