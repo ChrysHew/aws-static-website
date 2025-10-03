@@ -7,18 +7,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DIST_ID: E24P9YW5EITBF8
+      S3_BUCKET: chrys-aws-static-site-123
+      S3_REGION: ca-central-1
+      AWS_REGION: us-east-1
     steps:
       - uses: actions/checkout@v4
-
-      - name: Configure AWS
-        uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1   # hardcode to avoid missing secret
-
-      - name: Sync site/ to S3
-        run: aws s3 sync site/ s3://chrys-aws-static-site-123 --delete
-
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Sync site to S3
+        run: aws s3 sync site/ "s3://${{ env.S3_BUCKET }}" --region $S3_REGION --delete
       - name: Invalidate CloudFront cache
-        run: aws cloudfront create-invalidation --distribution-id E24P9YW5EITBF8 --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id $DIST_ID --paths "/*"
