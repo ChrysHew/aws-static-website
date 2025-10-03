@@ -1,27 +1,24 @@
 name: Deploy static site
-
 on:
   push:
     branches: [ main ]
+  workflow_dispatch: {}
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: us-east-1   # hardcode to avoid missing secret
 
-      - name: Sync site to S3
-        run: aws s3 sync site/ "s3://${{ secrets.S3_BUCKET }}" --delete
+      - name: Sync site/ to S3
+        run: aws s3 sync site/ s3://chrys-aws-static-site-123 --delete
 
       - name: Invalidate CloudFront cache
-        run: aws cloudfront create-invalidation \
-          --distribution-id "${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}" \
-          --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id E24P9YW5EITBF8 --paths "/*"
